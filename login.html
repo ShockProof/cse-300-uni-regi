@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title> UAP CSE </title>
+	<!-- Bootstrap core CSS-->
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Custom fonts for this template-->
+	<link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<!-- Custom styles for this template-->
+	<link href="css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+	<div class="container">
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Login</div>
+			<div class="card-body">
+				<form>
+					
+					<div class="form-group">
+						<label>Email address</label>
+						<input class="form-control" id="getemail" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+					</div>
+					
+					<div class="form-group">
+						<label>Password</label>
+						<input class="form-control" id="getpass" type="password" placeholder="Password">
+					</div>
+					
+					<div class="form-group" id="errormessage" style="display:none" >
+						<label style="color:red"> </label>
+					</div>
+					
+
+					<button class="btn btn-primary btn-block">Login</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script>
+		
+		$(document).ready(function() {
+			localStorage.removeItem( 'user' );
+			$('button').click(function(e){
+				e.preventDefault();
+
+				var obj = {
+					email : $("#getemail").val(),
+					pass : $("#getpass").val()
+				};
+
+				$.ajax({
+					url:'login.php?phpCall='+JSON.stringify(obj),
+					success: function(response){
+						obj = JSON.parse(response);
+						if( obj.id == 0 ) {
+							$("#errormessage").show();
+							$("#errormessage label").html('Invalid login approach');
+						} 
+						else {
+							localStorage.setItem( 'user', response );
+							window.location.href = 'student_index.html';
+						}
+					},
+					error: function(a,b,c){
+						console.log(b);
+					},
+					complete:function(){
+					}
+				});
+			});
+		});
+	
+	</script>
+</body>
+
+</html>
