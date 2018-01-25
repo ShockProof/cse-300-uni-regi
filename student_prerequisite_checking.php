@@ -5,6 +5,17 @@ $username = "root";
 $password = "";
 $dbname = "beta_uni_regi" ;
 
+function replace_semester( $par ) {
+	if( $par == 1 ) return "1-1";
+	if( $par == 2 ) return "1-2";
+	if( $par == 3 ) return "2-1";
+	if( $par == 4 ) return "2-2";
+	if( $par == 5 ) return "3-1";
+	if( $par == 6 ) return "3-2";
+	if( $par == 7 ) return "4-1";
+	return "4-2";
+}
+
 function getCourseID( $code )
 {
 	$q = '"';
@@ -32,7 +43,10 @@ echo "[";
 foreach( $qry as $key => $value ) {
 	if( $key > 0 ) echo ",";
 	echo "[";
-	echo "{$q}{$value['semester']}{$q},";
+	
+	$temp = replace_semester($value['semester']);
+	echo "{$q}{$temp}{$q},";
+	
 	echo "{$q}{$value['name']}{$q},";
 	echo "{$q}{$value['short_name']}{$q},";
 	echo "{$q}{$value['credit']}{$q}";
