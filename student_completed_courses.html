@@ -106,7 +106,7 @@
 							<tr>
 								<th>
 									Semester
-										<input class="form-control" type="text" id="" />
+										<input class="form-control" type="text" id="filterinput" />
 								</th>
 								<th>Course Name</th>
 								<th>Course Code</th>
@@ -168,6 +168,14 @@
 		<script>
 		
 			$(document).ready(function() {
+
+				$("#filterinput").on("keyup", function() {
+					var value = $(this).val().toLowerCase();
+					$("tbody tr").filter(function() {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+
 				var user = JSON.parse( localStorage.getItem('user') );
 				if ( user === null ) window.location.href = 'login.html';
 				
@@ -181,11 +189,13 @@
 						var obj = JSON.parse(response);
 						console.log(obj);
 						for( var i = 0 ; i < obj.length ; i ++ ) {
-							$('tbody').append( '<tr>' );
+							var str = '';
+							str += '<tr>';
 							for( var j = 0 ; j < obj[i].length ; j ++ ) {
-								$('tbody').append( '<td>' +  obj[i][j]  + '</td>' );
+								str += ('<td>' +  obj[i][j]  + '</td>');
 							}
-							$('tbody').append( '</tr>' );
+							str += '</tr>';
+							$('tbody').append( str );
 						}
 					},
 					error : function(a,b,c) {
