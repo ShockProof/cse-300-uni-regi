@@ -201,7 +201,7 @@
 						var obj = JSON.parse(response);
 						console.log(obj);
 						for( var i = 0 ; i < obj.length ; i ++ ) {
-							$('select').append( '<option value="'+obj[i][2]+'"> '+obj[i][2]+' </option>' );
+							$('select').append( '<option value="'+obj[i][2]+'"> '+obj[i][2]+' - '+obj[i][1] +' </option>' );
 						}
 					},
 					error : function(a,b,c) {
