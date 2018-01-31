@@ -20,11 +20,11 @@ foreach( $qry as $key => $value ) {
 
 
 $q = '"';
-$qry_string = "SELECT id FROM prerequisite_course WHERE course_id=(SELECT id FROM course WHERE short_name={$q}{$ajax->courseShortName}{$q})";
+$qry_string = "SELECT prerequisite FROM prerequisite_course WHERE course_id=(SELECT id FROM course WHERE short_name={$q}{$ajax->courseShortName}{$q})";
 $qry = $Connection->query($qry_string);
 
 foreach( $qry as $key => $value ) {
-    if( !in_array( $value['id'] , $completed ) ) {
+    if( !in_array( $value['prerequisite'] , $completed ) ) {
         echo "{$q}prerequisite missed{$q}";
         return;
     }
